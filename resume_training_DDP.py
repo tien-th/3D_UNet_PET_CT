@@ -8,7 +8,7 @@ from torch.optim.lr_scheduler import StepLR
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 from tqdm import tqdm
-from utils import get_image_grid
+
 from model.unet3d import ResidualUNetSE3D
 from dataset.dataset import CustomAlignedDataset
 
@@ -45,16 +45,17 @@ def load_checkpoint(model, checkpoint_path):
 
 def main(rank, world_size):
     setup(rank, world_size)
-    experiment_name = "Experiment_ResidualUNet3D_lr1e-4"
+    experiment_name = "Experiment_5_slices"
     N_EPOCHS = 100
     LOG_DIR = f'./logs/{experiment_name}'
     CHECKPOINT_DIR = LOG_DIR + '/checkpoints'
-    CHECKPOINT_PATH = CHECKPOINT_DIR + '/model_epoch_38.pth'
+    # CHECKPOINT_PATH = CHECKPOINT_DIR + '/model_epoch_38.pth'
+    CHECKPOINT_PATH = ''
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
     # Dataset and Dataloader
-    root_path = '3d_model_data'
+    root_path = '3d_model_data_5'
     train_dataset = CustomAlignedDataset(root_path, stage='train')
     val_dataset = CustomAlignedDataset(root_path, stage='val')
     
