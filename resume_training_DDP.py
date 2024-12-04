@@ -14,7 +14,7 @@ from dataset.dataset import CustomAlignedDataset
 
 def setup(rank, world_size):
     os.environ['MASTER_ADDR'] = '127.0.0.1'  # Set the master address
-    os.environ['MASTER_PORT'] = '29500'     # Set a free port
+    os.environ['MASTER_PORT'] = '29700'     # Set a free port
     dist.init_process_group("nccl", rank=rank, world_size=world_size)
     torch.cuda.set_device(rank)
 
@@ -45,7 +45,7 @@ def load_checkpoint(model, checkpoint_path):
 
 def main(rank, world_size):
     setup(rank, world_size)
-    experiment_name = "Experiment_5_slices"
+    experiment_name = "Experiment_3_slices"
     N_EPOCHS = 100
     LOG_DIR = f'./logs/{experiment_name}'
     CHECKPOINT_DIR = LOG_DIR + '/checkpoints'
@@ -55,7 +55,7 @@ def main(rank, world_size):
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
     # Dataset and Dataloader
-    root_path = '3d_model_data_5'
+    root_path = '3d_model_data_3'
     train_dataset = CustomAlignedDataset(root_path, stage='train')
     val_dataset = CustomAlignedDataset(root_path, stage='val')
     
